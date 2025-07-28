@@ -1,10 +1,9 @@
 import sqlite3
 
-# Connect to SQLite database (or create it if it doesn't exist)
+
 conn = sqlite3.connect('contacts.db')
 cursor = conn.cursor()
 
-# Create a table for storing contact information
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS contacts (
         id INTEGER PRIMARY KEY,
@@ -16,7 +15,7 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# Function to add a new contact
+
 def add_contact():
     name = input("Enter contact name: ")
     phone = input("Enter contact phone number: ")
@@ -30,7 +29,7 @@ def add_contact():
     conn.commit()
     print("Contact added successfully!")
 
-# Function to view all contacts
+
 def view_contacts():
     cursor.execute("SELECT * FROM contacts")
     contacts = cursor.fetchall()
@@ -40,7 +39,7 @@ def view_contacts():
     else:
         print("No contacts found.")
 
-# Function to update a contact's information
+
 def update_contact():
     contact_id = input("Enter the ID of the contact to update: ")
     field = input("Which field do you want to update? (name/phone/email/address): ").lower()
@@ -53,14 +52,14 @@ def update_contact():
     else:
         print("Invalid field selection.")
 
-# Function to delete a contact
+
 def delete_contact():
     contact_id = input("Enter the ID of the contact to delete: ")
     cursor.execute("DELETE FROM contacts WHERE id = ?", (contact_id,))
     conn.commit()
     print("Contact deleted successfully!")
 
-# Function to search for a contact by name or phone number
+
 def search_contact():
     search_term = input("Enter the name or phone number of the contact to search: ")
     cursor.execute("SELECT * FROM contacts WHERE name LIKE ? OR phone LIKE ?", (f'%{search_term}%', f'%{search_term}%'))
@@ -71,7 +70,7 @@ def search_contact():
     else:
         print("No contact found with that information.")
 
-# Main program loop
+
 def main():
     while True:
         print("\nContact Management System")
@@ -100,9 +99,8 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-# Run the Contact Management System
 if __name__ == "__main__":
     main()
 
-# Close the database connection
+
 conn.close()
