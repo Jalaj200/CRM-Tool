@@ -1,10 +1,8 @@
 import sqlite3
 
-# Connect to SQLite database (or create it if it doesn't exist)
 conn = sqlite3.connect('crm.db')
 cursor = conn.cursor()
 
-# Create a table for storing customer information
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS customers (
         id INTEGER PRIMARY KEY,
@@ -16,7 +14,6 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# Function to add a new customer
 def add_customer():
     name = input("Enter customer name: ")
     email = input("Enter customer email: ")
@@ -33,7 +30,6 @@ def add_customer():
     except sqlite3.IntegrityError:
         print("Error: A customer with this email already exists.")
 
-# Function to view all customers
 def view_customers():
     cursor.execute("SELECT * FROM customers")
     customers = cursor.fetchall()
@@ -43,7 +39,6 @@ def view_customers():
     else:
         print("No customers found.")
 
-# Function to update a customer's information
 def update_customer():
     customer_id = input("Enter the ID of the customer to update: ")
     field = input("Which field do you want to update? (name/email/phone/address): ").lower()
@@ -56,14 +51,13 @@ def update_customer():
     else:
         print("Invalid field selection.")
 
-# Function to delete a customer
 def delete_customer():
     customer_id = input("Enter the ID of the customer to delete: ")
     cursor.execute("DELETE FROM customers WHERE id = ?", (customer_id,))
     conn.commit()
     print("Customer deleted successfully!")
 
-# Function to search for a customer by email
+
 def search_customer():
     email = input("Enter the email of the customer to search: ")
     cursor.execute("SELECT * FROM customers WHERE email = ?", (email,))
@@ -73,7 +67,7 @@ def search_customer():
     else:
         print("No customer found with that email.")
 
-# Main program loop
+
 def main():
     while True:
         print("\nCustomer Relationship Management Tool")
@@ -102,9 +96,8 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-# Run the CRM program
+
 if __name__ == "__main__":
     main()
 
-# Close the connection when done
 conn.close()
