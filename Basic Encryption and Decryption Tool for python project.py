@@ -1,13 +1,12 @@
 from cryptography.fernet import Fernet
 
-# Function to generate a new encryption key
+
 def generate_key():
     key = Fernet.generate_key()
     with open("secret.key", "wb") as key_file:
         key_file.write(key)
     print("New encryption key generated and saved to 'secret.key'")
 
-# Function to load the encryption key from a file
 def load_key():
     try:
         with open("secret.key", "rb") as key_file:
@@ -17,7 +16,7 @@ def load_key():
         print("Key file not found. Generate a new key first.")
         return None
 
-# Function to encrypt a message
+
 def encrypt_message():
     key = load_key()
     if key is None:
@@ -27,7 +26,7 @@ def encrypt_message():
     encrypted_message = fernet.encrypt(message)
     print("Encrypted message:", encrypted_message.decode())
 
-# Function to decrypt a message
+
 def decrypt_message():
     key = load_key()
     if key is None:
@@ -40,7 +39,7 @@ def decrypt_message():
     except Exception as e:
         print("Decryption failed:", e)
 
-# Main program loop
+
 def main():
     while True:
         print("\nBasic Encryption and Decryption Tool")
@@ -63,6 +62,6 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-# Run the tool
+
 if __name__ == "__main__":
     main()
